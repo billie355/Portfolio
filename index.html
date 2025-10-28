@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>Portfolio</title>
+  <meta name="description" content="Minimal, animated portfolio of Billy Joe Sablayan. Front‑End dev student — projects, skills, and contact." />
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="progress" role="progressbar" aria-label="Page scroll progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+  <header class="site-header" aria-label="Intro">
+    <nav class="skip-nav" aria-label="Skip links">
+      <a href="#work" class="skip-link">Skip to Work</a>
+      <a href="#contact" class="skip-link">Skip to Contact</a>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section id="hero" class="section hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1 id="hero-title" class="reveal">Billy Joe Sablayan</h1>
+          <p class="subtitle reveal" style="--d:120ms">Front‑End Developer · Student</p>
+          <p class="lede reveal" style="--d:220ms">Passionate about creating interactive, responsive, and accessible websites using HTML, CSS, and JavaScript.</p>
+          <div class="cta-group reveal" style="--d:320ms">
+            <a class="btn primary" href="#work">View Work</a>
+            <a class="btn ghost" href="#about">About Me</a>
+          </div>
+        </div>
+        <div class="avatar-wrap reveal" style="--d:60ms">
+          <div class="avatar-frame" aria-hidden="true">
+            <span class="ring" aria-hidden="true"></span>
+            <span class="glow" aria-hidden="true"></span>
+            <img class="avatar" src="profile.jpg" alt="Portrait of Billy Joe Sablayan" loading="eager" decoding="async" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section about" aria-labelledby="about-title">
+      <div class="container narrow about-grid">
+        <div>
+          <h2 id="about-title" class="reveal">About</h2>
+          <p class="reveal" style="--d:120ms">Hi! I’m Billy, a front-end developer from the Philippines. I love<br>building user-friendly websites that combine clean design with smooth functionality. My focus is on accessibility, performance, and creating meaningful interactions using HTML, CSS, and JavaScript.</p>
+          <div class="skills reveal" style="--d:220ms" role="list" aria-label="Skills">
+            <span role="listitem" class="chip">HTML,</span>
+            <span role="listitem" class="chip">CSS,</span>
+            <span role="listitem" class="chip">JavaScript,</span>
+            <span role="listitem" class="chip">Accessibility (a11y),</span>
+            <span role="listitem" class="chip">Responsive Design,</span>
+            <span role="listitem" class="chip">Git.</span>
+          </div>
+        </div>
+        <figure class="about-figure reveal" style="--d:180ms">
+          <div class="avatar-frame">
+            <span class="ring" aria-hidden="true"></span>
+            <span class="glow" aria-hidden="true"></span>
+            <img class="avatar avatar-sm" src="profile.jpg" alt="Portrait of Billy Joe Sablayan" loading="lazy" decoding="async" />
+          </div>
+          <figcaption class="visually-hidden">Personal photo</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="work" class="section work" aria-labelledby="work-title">
+      <div class="container">
+        <h2 id="work-title" class="reveal">Selected Work</h2>
+        <div class="grid" role="list" aria-label="Projects">
+          <a class="card reveal" style="--d:80ms" role="listitem" href="https://billie355.github.io/TimeOfLove/" target="_blank" rel="noopener noreferrer" aria-label="Open project: Landing Page Kit (opens in new tab)">
+            <div class="card-body">
+              <h3 class="card-title">Time Of Love</h3>
+              <p class="card-desc">A personalized anniversary tracker that counts days, months, and years in a relationship using HTML, CSS, and JavaScript.</p>
+              <ul class="tags" aria-label="Tags">
+                <li>HTML</li><li>CSS</li><li>JS</li>
+              </ul>
+            </div>
+          </a>
+          <a class="card reveal" style="--d:140ms" role="listitem" href="https://billie355.github.io/howtomeetladies/" target="_blank" rel="noopener noreferrer" aria-label="Open project: CSS Art Gallery (opens in new tab)">
+            <div class="card-body">
+              <h3 class="card-title">How to Meet Ladies</h3>
+              <p class="card-desc">A fun interactive page with a playful question—“Do you have a crush on me?”—where the “No” button avoids clicks while “Yes” responds instantly.</p>
+              <ul class="tags"><li>HTML</li><li>CSS</li><li>JS</li></ul>
+            </div>
+          </a>
+          <a class="card reveal" style="--d:200ms" role="listitem" href="https://billie355.github.io/firstmonth/" target="_blank" rel="noopener noreferrer" aria-label="Open project: API Dashboard (opens in new tab)">
+            <div class="card-body">
+              <h3 class="card-title">First Monthsary</h3>
+              <p class="card-desc">A dedicated website celebrating the first monthsary, featuring custom design and interactive elements built with HTML, CSS, and JavaScript.</p>
+              <ul class="tags"><li>HTML</li><li>CSS</li><li>JS</li></ul>
+            </div>
+          </a>
+          <a class="card reveal" style="--d:260ms" role="listitem" href="https://billie355.github.io/secondmonths/" target="_blank" rel="noopener noreferrer" aria-label="Open project: Micro‑Interactions (opens in new tab)">
+            <div class="card-body">
+              <h3 class="card-title">Second Monthsary</h3>
+              <p class="card-desc">A creative website for the second monthsary, showcasing delightful animations and accessible UI components.</p>
+              <ul class="tags"><li>HTML</li><li>CSS</li><li>JS</li></ul>
+            </div>
+          </a>
+          <a class="card reveal" style="--d:320ms" role="listitem" href="https://billie355.github.io/thirdmonths/" target="_blank" rel="noopener noreferrer" aria-label="Open project: PWA Weather (opens in new tab)">
+            <div class="card-body">
+              <h3 class="card-title">Third Monthsary</h3>
+              <p class="card-desc">A themed website for the third monthsary, combining romantic design with smooth JavaScript interactions.</p>
+              <ul class="tags"><li>HTML</li><li>CSS</li><li>JS</li></ul>
+            </div>
+          </a>
+          <a class="card reveal" style="--d:380ms" role="listitem" href="https://billie355.github.io/fourthmonthsary/" target="_blank" rel="noopener noreferrer" aria-label="Open project: Markdown Notes (opens in new tab)">
+            <div class="card-body">
+              <h3 class="card-title">Fourth Monthsary</h3>
+              <p class="card-desc">A special fourth monthsary page with personalized content and dynamic styling for a memorable experience.</p>
+              <ul class="tags"><li>HTML</li><li>CSS</li><li>JS</li></ul>
+            </div>
+          </a>
+          <a class="card reveal" style="--d:440ms" role="listitem" href="https://billie355.github.io/fifthmonths/" target="_blank" rel="noopener noreferrer" aria-label="Open project: Design Tokens (opens in new tab)">
+            <div class="card-body">
+              <h3 class="card-title">Fifth Monthsary</h3>
+              <p class="card-desc">A fifth monthsary celebration site featuring elegant design and reusable components for consi</p>
+              <ul class="tags"><li>HTML</li><li>CSS</li><li>JS</li></ul>
+            </div>
+          </a>
+          <a class="card reveal" style="--d:500ms" role="listitem" href="https://billie355.github.io/kids-coding-library/" target="_blank" rel="noopener noreferrer" aria-label="Open project: Typing Test (opens in new tab)">
+            <div class="card-body">
+              <h3 class="card-title">Kids Coding Library</h3>
+              <p class="card-desc">An educational coding resource with lessons and a typing speed test, designed for accessibility and accuracy.</p>
+              <ul class="tags"><li>HTML</li><li>CSS</li><li>JS</li></ul>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact" aria-labelledby="contact-title">
+      <div class="container narrow">
+        <h2 id="contact-title" class="reveal">Contact</h2>
+        <p class="reveal" style="--d:120ms">Have a project in mind or just want to say hi?</p>
+        <div class="links reveal" style="--d:200ms">
+          <a class="btn primary" href="mailto:roxassablayanbillyjoe@gmail.com">Email Me</a>
+          <div class="social" role="list" aria-label="Social links">
+            <a role="listitem" href="https://github.com/billie355" target="_blank" rel="noopener">GitHub</a>
+            <a role="listitem" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            <a role="listitem" href="https://www.facebook.com/bjroxassablayan" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Section navigation">
+    <ul>
+      <li><a href="#hero" data-section="hero">Home</a></li>
+      <li><a href="#about" data-section="about">About</a></li>
+      <li><a href="#work" data-section="work">Work</a></li>
+      <li><a href="#contact" data-section="contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="cursor cursor-dot" aria-hidden="true"></div>
+  <div class="cursor cursor-outline" aria-hidden="true"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>
