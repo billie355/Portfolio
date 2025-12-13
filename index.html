@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-pure: #ffffff;
+            --bg-smoke: #f5f5f5;
+            --bg-snow: #fafafa;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-pure);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            position: fixed;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 100;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: -1px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            margin-left: 30px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #999;
+        }
+
+        section {
+            padding: 100px 10%;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bg-pure { background-color: var(--bg-pure); }
+        .bg-smoke { background-color: var(--bg-smoke); }
+
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            font-weight: 600;
+            border-left: 5px solid #ccc;
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-light);
+            line-height: 1.8;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image {
+            width: 350px;
+            height: 350px;
+            object-fit: cover;
+            background-color: #eee;
+            box-shadow: var(--shadow);
+            
+            /* Animated Blob Shape */
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            border: 3px solid var(--text-dark);
+            animation: morph 8s ease-in-out infinite, float 6s ease-in-out infinite;
+            transition: all 0.5s ease;
+        }
+
+        /* Keyframes for Blob Animation */
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        /* Keyframes for Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--text-dark);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #555;
+            transform: translateY(-3px);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--bg-pure);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border: 1px solid #f0f0f0;
+            transition: transform 0.3s;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #ddd;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+            filter: blur(2px);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .card:nth-child(2) { transition-delay: 200ms; }
+        .card:nth-child(3) { transition-delay: 400ms; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                display: flex;
+                gap: 20px;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .nav-links a {
+                margin-left: 0;
+                font-size: 0.85rem;
+            }
+
+            section {
+                padding: 80px 5%;
+            }
+
+            .hero-container {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 30px;
+            }
+
+            .hero-image {
+                width: 220px;
+                height: 220px;
+                margin-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            p {
+                margin: 0 auto 20px auto;
+                font-size: 0.95rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: var(--text-dark);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10vh auto; 
+            padding: 40px;
+            border: 1px solid #888;
+            width: 90%; 
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            position: relative;
+            animation: modalSlide 0.4s ease;
+        }
+
+        @keyframes modalSlide {
+            from {transform: translateY(-50px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            transition: color 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+            background-color: var(--bg-snow);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #333;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">BJRS.</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#projects">Work</a>
+            <a href="#about">About</a>
+        </div>
+    </nav>
+
+    <section id="home" class="bg-pure">
+        <div class="hero-container">
+            <div class="hero-text reveal">
+                <p style="margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; min-height: 24px;">
+                    <span class="typing-text"></span><span class="cursor">&nbsp;</span>
+                </p>
+                <h1>Billy Joe <br>Roxas Sablayan</h1>
+                <p>Minimalist design. Functional code. Building clean web experiences.</p>
+                <a href="#projects" class="btn">View Projects</a>
+            </div>
+            
+            <div class="hero-image-container reveal">
+                <img src="/pfp.png" alt="Billy Joe Profile" class="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="bg-smoke">
+        <div class="reveal">
+            <h2>Selected Works</h2>
+            <div class="grid">
+                <a href="https://billie355.github.io/STI-GradeCalculator/" class="card">
+                    <h3>STI College Grade Calculator</h3>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">A clean tool built with JavaScript to calculate weighted averages dynamically.</p>
+                </a>
+
+                <a href="https://billie355.github.io/kids-coding-library/" class="card">
+                    <h3>Coding For Kids</h3>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">All lessons are written for kids and beginners but teach real concepts accurately.</p>
+                </a>
+
+                <a href="https://billie355.github.io/reaction-time-test/" class="card">
+                    <h3>Reaction Time Test</h3>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Minimalist Reaction Time Test — animated UI, white/grey themes, stats, history bars, and unit toggle (ms ↔ s).</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="bg-pure">
+        <div class="reveal">
+            <h2>About Me</h2>
+            <p>I am Billy Joe Roxas Sablayan. I specialize in HTML, CSS, and JavaScript.</p>
+            <p>I believe in simple, clean, and effective code. My goal is to create websites that are not just functional but also pleasing to the eye through minimalism.</p>
+            <br>
+            <a href="#" id="contactBtn" class="btn" style="background-color: #f5f5f5; color: #333; border: 1px solid #ccc;">Contact Me</a>
+        </div>
+    </section>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 style="margin-bottom: 20px; border: none; padding: 0;">Send a Message</h2>
+            <form action="https://formsubmit.co/roxassablayanbillyjoe@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="New Email from Portfolio!">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="How can I help you?"></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; border: none; cursor: pointer;">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('scroll', reveal);
+
+        function reveal(){
+            var reveals = document.querySelectorAll('.reveal');
+
+            for(var i = 0; i < reveals.length; i++){
+                var windowheight = window.innerHeight;
+                var revealtop = reveals[i].getBoundingClientRect().top;
+                var revealpoint = 150;
+
+                if(revealtop < windowheight - revealpoint){
+                    reveals[i].classList.add('active');
+                }
+                else{
+                    reveals[i].classList.remove('active');
+                }
+            }
+        }
+        
+        reveal();
+
+        const textElement = document.querySelector('.typing-text');
+        const texts = ['Front End Developer', 'UI/UX Designer', 'Freelancer'];
+        let count = 0;
+        let index = 0;
+        let currentText = '';
+        let letter = '';
+        let isDeleting = false;
+
+        (function type() {
+            if (count === texts.length) {
+                count = 0;
+            }
+            currentText = texts[count];
+
+            if (isDeleting) {
+                letter = currentText.slice(0, --index);
+            } else {
+                letter = currentText.slice(0, ++index);
+            }
+
+            textElement.textContent = letter;
+
+            let typeSpeed = 100;
+
+            if (isDeleting) {
+                typeSpeed /= 2;
+            }
+
+            if (!isDeleting && letter.length === currentText.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && letter.length === 0) {
+                isDeleting = false;
+                count++;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        })();
+
+        // Modal Logic
+        var modal = document.getElementById("contactModal");
+        var btn = document.getElementById("contactBtn");
+        var span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function(e) {
+            e.preventDefault();
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
