@@ -532,6 +532,8 @@ a { color: inherit; text-decoration: none; }
 
 .hero-name .accent-word {
   display: inline-block; /* Forces repaint during layout changes to fix WebKit background-clip bug */
+  padding-bottom: 0.15em; /* Prevents descenders like 'y' from being clipped by background-clip */
+  margin-bottom: -0.15em; /* Offsets the padding to prevent layout shifts */
   background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-3));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
