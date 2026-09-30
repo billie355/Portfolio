@@ -196,7 +196,7 @@
               <h1 class="hero-name">
                 Billy Joe <br>
                 <span class="accent-word">
-                  <span class="interactive-name" onclick="this.classList.toggle('expanded')" title="Click to reveal!">
+                  <span class="interactive-name" onclick="if(this.classList.contains('expanded')) return; this.classList.add('expanded'); setTimeout(() => this.classList.remove('expanded'), 3000);" title="Click to reveal!">
                     R<span class="hidden-text">oxas</span><span class="dot-text">.</span>
                   </span>
                   Sablayan
