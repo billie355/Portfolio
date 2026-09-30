@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bjrs-pwa-v2';
+const CACHE_NAME = 'bjrs-pwa-v3';
 const urlsToCache = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting(); // Force the waiting service worker to become the active service worker
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
@@ -35,6 +36,6 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim()) // Take control of all open pages immediately
   );
 });
