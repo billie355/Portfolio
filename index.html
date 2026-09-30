@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <!-- ── Meta & SEO ──────────────────────────────────────── -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Billy Joe Roxas Sablayan — Full Stack Developer & UI/UX Designer</title>
+  <meta name="description" content="Personal portfolio of Billy Joe Roxas Sablayan — Full Stack Developer and UI/UX Designer building modern web apps with React, Supabase, Firebase, and vanilla JavaScript.">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Billy Joe Roxas Sablayan — Portfolio">
+  <meta property="og:description" content="Full Stack Developer & UI/UX Designer. React, Supabase, Firebase & Vanilla JS. Building clean, modern web experiences.">
+  <meta property="og:image"       content="assets/pfp.png">
+  <meta property="og:url"         content="">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Billy Joe Roxas Sablayan — Portfolio">
+  <meta name="twitter:description" content="Full Stack Developer & UI/UX Designer. React, Supabase, Firebase & Vanilla JS.">
+  <meta name="twitter:image"       content="assets/pfp.png">
+
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#6c63ff">
+
+  <!-- Web App Manifest & Favicons -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="assets/BJRS.png">
+  <link rel="apple-touch-icon" href="assets/BJRS.png">
+
+  <!-- Preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Inline: apply saved theme immediately to prevent flash -->
+  <script>
+    (function() {
+      var t = localStorage.getItem('bjrs-theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+      else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+</head>
+
+<body>
+
+  <!-- ── SVG Glass Refraction Filter (blur:5, refraction:0.05, depth:0) ── -->
+  <svg id="glass-svg-filters" aria-hidden="true" focusable="false"
+       style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none">
+    <defs>
+      <filter id="glass-refraction"
+              x="-4%" y="-4%" width="108%" height="108%"
+              color-interpolation-filters="sRGB">
+        <!-- Subtle noise for the refraction warp along edges -->
+        <feTurbulence type="fractalNoise"
+                      baseFrequency="0.9 0.65"
+                      numOctaves="2"
+                      seed="3"
+                      stitchTiles="stitch"
+                      result="noise"/>
+        <!-- Convert noise to grayscale for even channel displacement -->
+        <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+        <!-- Displace: scale=5 comes from refraction(0.05) × 100 -->
+        <feDisplacementMap in="SourceGraphic"
+                           in2="grayNoise"
+                           scale="5"
+                           xChannelSelector="R"
+                           yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ── Scroll Progress Bar ──────────────────────────────── -->
+  <div id="scroll-progress" role="progressbar" aria-label="Page scroll progress"></div>
+
+  <!-- ── Intro Screen (fades out in ~1s) ──────────────────── -->
+  <div id="intro-screen" aria-hidden="true">
+    <span class="intro-logo">BJRS.</span>
+  </div>
+
+  <!-- ── Animated Background Blobs ───────────────────────── -->
+  <div id="blob-canvas" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       DESKTOP NAVBAR — floating pill glass
+       ══════════════════════════════════════════════════════ -->
+  <header>
+    <nav id="navbar" aria-label="Main navigation">
+      <!-- Logo (neumorphic inset chip) -->
+      <div class="nav-logo" aria-label="Billy Joe Roxas Sablayan">BJRS.</div>
+
+      <!-- Nav links with sliding indicator -->
+      <div class="nav-links" role="list">
+        <div class="nav-indicator" aria-hidden="true"></div>
+        <a href="#home"     role="listitem" aria-label="Go to Home">Home</a>
+        <a href="#projects" role="listitem" aria-label="Go to Work / Projects">Work</a>
+        <a href="#about"    role="listitem" aria-label="Go to About Me">About</a>
+        <a href="#contact"  role="listitem" aria-label="Go to Contact">Contact</a>
+      </div>
+
+      <!-- Theme toggle + contact CTA -->
+      <div class="nav-right">
+        <button
+          class="theme-toggle"
+          aria-label="Toggle dark/light mode"
+          title="Toggle theme"
+        >
+          <div class="theme-toggle-thumb">☀️</div>
+        </button>
+        <button class="btn-primary" data-open-modal aria-haspopup="dialog" aria-label="Open contact form">
+          Say Hi <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════
+       MOBILE BOTTOM TAB BAR
+       ══════════════════════════════════════════════════════ -->
+  <nav id="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-inner">
+      <div class="mobile-nav-indicator" aria-hidden="true"></div>
+
+      <!-- Home -->
+      <button class="mobile-nav-btn" data-section="home" aria-label="Go to Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Home
+      </button>
+
+      <!-- Work -->
+      <button class="mobile-nav-btn" data-section="projects" aria-label="Go to Work">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="7" width="20" height="14" rx="2"/>
+          <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+        </svg>
+        Work
+      </button>
+
+      <!-- About -->
+      <button class="mobile-nav-btn" data-section="about" aria-label="Go to About">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
+        </svg>
+        About
+      </button>
+
+      <!-- Contact -->
+      <button class="mobile-nav-btn" data-section="contact" aria-label="Go to Contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        Contact
+      </button>
+
+      <!-- Theme -->
+      <button class="mobile-theme-btn" aria-label="Toggle dark/light mode">
+        <span class="btn-icon">☀️</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       MAIN CONTENT
+       ══════════════════════════════════════════════════════ -->
+  <div id="page-wrapper">
+    <main>
+
+      <!-- ────────────────────────────────────────────────────
+           SECTION 1: HERO
+           ──────────────────────────────────────────────────── -->
+      <section id="home" class="section" aria-label="Hero introduction">
+        <div class="section-inner">
+          <div class="hero-grid">
+
+            <!-- Left: text -->
+            <div class="hero-text reveal">
+              <!-- Typing eyebrow (updated texts: Full Stack Developer, UI/UX Designer, Freelancer) -->
+              <p class="hero-eyebrow" aria-live="polite" aria-label="Current role">
+                <span class="typing-text"></span><span class="cursor-blink" aria-hidden="true">&nbsp;</span>
+              </p>
+
+              <!-- Exact original heading text -->
+              <h1 class="hero-name">
+                Billy Joe <br>
+                <span class="accent-word">
+                  <span class="interactive-name" onclick="this.classList.toggle('expanded')" title="Click to reveal!">
+                    R<span class="hidden-text">oxas</span><span class="dot-text">.</span>
+                  </span>
+                  Sablayan
+                </span>
+              </h1>
+
+              <!-- Exact original bio -->
+              <p class="hero-bio">Minimalist design. Functional code. Building clean, full-stack web experiences.</p>
+
+              <div class="hero-cta">
+                <a href="#projects" class="btn-primary">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                  View Projects
+                </a>
+                <a href="assets/Resume.pdf" target="_blank" download="Billy_Joe_Roxas_Sablayan_CV.pdf" class="btn-secondary" aria-label="Download CV">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Download CV
+                </a>
+                <button class="btn-secondary" data-open-modal aria-haspopup="dialog">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  Contact Me
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: photo in neumorphic frame -->
+            <div class="hero-image-side reveal" style="transition-delay: 150ms;">
+              <div class="pfp-frame">
+                <!-- Image wrapper — interactions on wrapper, not the img -->
+                <div class="pfp-inner">
+                  <img
+                    src="assets/pfp.png"
+                    alt="Billy Joe Roxas Sablayan profile photo"
+                    loading="eager"
+                    draggable="false"
+                    style="-webkit-user-drag:none; user-select:none; -webkit-touch-callout:none;"
+                  >
+                  <div class="pfp-shine" aria-hidden="true"></div>
+                </div>
+              </div>
+
+              <!-- Floating "available" badge -->
+              <div class="hero-badge" aria-hidden="true">
+                <span class="badge-dot"></span>
+                Available for work
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ────────────────────────────────────────────────────
+           SECTION 2: PROJECTS (Bento Grid)
+           ──────────────────────────────────────────────────── -->
+      <section id="projects" class="section" aria-label="Selected Works">
+        <div class="section-inner">
+
+          <p class="section-label reveal">Portfolio</p>
+          <h2 class="section-title reveal" style="transition-delay:80ms;">Selected Works</h2>
+
+          <!-- Bento grid — all hrefs, h3s and ps are UNCHANGED from original -->
+          <div class="bento-grid reveal-stagger">
+
+            <!-- Card 1: STI Grade Calculator (span 2) -->
+            <a
+              href="https://billie355.github.io/STI-GradeCalculator/"
+              class="bento-card"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit STI College Grade Calculator project"
+            >
+              <div class="bento-glow" aria-hidden="true"></div>
+              <div class="card-shine"  aria-hidden="true"></div>
+
+              <div class="bento-card-content">
+                <div class="bento-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+                <h3>STI College Grade Calculator</h3>
+                <p>A clean tool built with JavaScript to calculate weighted averages dynamically.</p>
+              </div>
+
+              <div class="bento-arrow" aria-hidden="true">↗</div>
+            </a>
+
+            <!-- Card 2: Coding For Kids -->
+            <a
+              href="https://billie355.github.io/kids-coding-library/"
+              class="bento-card"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Coding For Kids project"
+            >
+              <div class="bento-glow" aria-hidden="true"></div>
+              <div class="card-shine"  aria-hidden="true"></div>
+
+              <div class="bento-card-content">
+                <div class="bento-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
+                <h3>Coding For Kids</h3>
+                <p>All lessons are written for kids and beginners but teach real concepts accurately.</p>
+              </div>
+
+              <div class="bento-arrow" aria-hidden="true">↗</div>
+            </a>
+
+            <!-- Card 3: Reaction Time Test -->
+            <a
+              href="https://billie355.github.io/reaction-time-test/"
+              class="bento-card"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Reaction Time Test project"
+            >
+              <div class="bento-glow" aria-hidden="true"></div>
+              <div class="card-shine"  aria-hidden="true"></div>
+
+              <div class="bento-card-content">
+                <div class="bento-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                <h3>Reaction Time Test</h3>
+                <p>Minimalist Reaction Time Test — animated UI, white/grey themes, stats, history bars, and unit toggle (ms ↔ s).</p>
+              </div>
+
+              <div class="bento-arrow" aria-hidden="true">↗</div>
+            </a>
+            <!-- Card 4: STI DMS -->
+            <a
+              href="https://sti-dms-system.vercel.app/"
+              class="bento-card"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit STI DMS Disciplinary Management System project"
+            >
+              <div class="bento-glow" aria-hidden="true"></div>
+              <div class="card-shine"  aria-hidden="true"></div>
+
+              <div class="bento-card-content">
+                <div class="bento-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+                <h3>STI DMS</h3>
+                <p>Disciplinary Management System for STI College Sta. Maria — secure, efficient, and transparent student discipline tracking.</p>
+              </div>
+
+              <div class="bento-arrow" aria-hidden="true">↗</div>
+            </a>
+
+            <!-- Card 5: PredictCup 2026 -->
+            <a
+              href="https://worldcup-project-zeta.vercel.app/"
+              class="bento-card"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit PredictCup 2026 FIFA World Cup Prediction Platform project"
+            >
+              <div class="bento-glow" aria-hidden="true"></div>
+              <div class="card-shine"  aria-hidden="true"></div>
+
+              <div class="bento-card-content">
+                <div class="bento-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7c0 6 6 10 6 10s6-4 6-10z"/></svg></div>
+                <h3>PredictCup 2026</h3>
+                <p>FIFA World Cup prediction platform — predict match results, compete on leaderboards, and share your picks.</p>
+              </div>
+
+              <div class="bento-arrow" aria-hidden="true">↗</div>
+            </a>
+
+            <!-- Card 6: Catapus -->
+            <a
+              href="https://cata-pus.vercel.app/"
+              class="bento-card"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Catapus social media app project"
+            >
+              <div class="bento-glow" aria-hidden="true"></div>
+              <div class="card-shine"  aria-hidden="true"></div>
+
+              <div class="bento-card-content">
+                <div class="bento-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+                <h3>Catapus</h3>
+                <p>A social media app for cat lovers and creators — share posts, chat, and discover communities in a fast, mobile-first feed.</p>
+              </div>
+
+              <div class="bento-arrow" aria-hidden="true">↗</div>
+            </a>
+
+          </div><!-- /bento-grid -->
+
+        </div>
+      </section>
+
+      <!-- ────────────────────────────────────────────────────
+           SECTION 3: ABOUT
+           ──────────────────────────────────────────────────── -->
+      <section id="about" class="section" aria-label="About Me">
+        <div class="section-inner">
+
+          <p class="section-label reveal">Background</p>
+          <h2 class="section-title reveal" style="transition-delay:80ms;">About Me</h2>
+
+          <div class="about-grid">
+
+            <!-- Left: glass text card with EXACT original paragraphs -->
+            <div class="about-text-card reveal" style="transition-delay:120ms;">
+              <!-- Exact original paragraph 1 -->
+              <p>I am Billy Joe Roxas Sablayan. I specialize in Full Stack web development — building modern apps with React, Supabase, Firebase, and vanilla JavaScript.</p>
+              <!-- Exact original paragraph 2 -->
+              <p>I believe in simple, clean, and effective code. My goal is to create websites that are not just functional but also pleasing to the eye through minimalism.</p>
+
+              <br>
+              <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <a href="assets/Resume.pdf" target="_blank" download="Billy_Joe_Roxas_Sablayan_CV.pdf" class="btn-secondary" aria-label="Download CV">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Download CV
+                </a>
+                <button class="btn-secondary" data-open-modal aria-haspopup="dialog">
+                  Contact Me
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: neumorphic skill chips -->
+            <div class="skills-card reveal" style="transition-delay:200ms;">
+              <p class="section-label">Tech Stack</p>
+              <div class="skill-chips">
+                <span class="chip"><span class="chip-dot"></span>HTML5</span>
+                <span class="chip"><span class="chip-dot"></span>CSS3</span>
+                <span class="chip"><span class="chip-dot"></span>JavaScript</span>
+                <span class="chip"><span class="chip-dot"></span>React</span>
+                <span class="chip"><span class="chip-dot"></span>Supabase</span>
+                <span class="chip"><span class="chip-dot"></span>Firebase</span>
+                <span class="chip"><span class="chip-dot"></span>UI Design</span>
+                <span class="chip"><span class="chip-dot"></span>UX Design</span>
+                <span class="chip"><span class="chip-dot"></span>Responsive Design</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ────────────────────────────────────────────────────
+           SECTION 4: CONTACT
+           Built only from existing email / social links in original file.
+           ──────────────────────────────────────────────────── -->
+      <section id="contact" class="section" aria-label="Contact">
+        <div class="section-inner">
+
+          <p class="section-label reveal">Get in Touch</p>
+          <h2 class="section-title reveal" style="transition-delay:80ms;">Let's Work Together</h2>
+
+          <div class="contact-card reveal" style="transition-delay:140ms;">
+            <p class="contact-bio">
+              Have a project in mind or just want to say hello?<br>
+              I'm always open to new opportunities and collaborations.
+            </p>
+
+            <div class="contact-links">
+              <!-- Primary CTA — opens the modal form (original FormSubmit email) -->
+              <button class="btn-primary" data-open-modal aria-haspopup="dialog">
+                Send a Message
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </button>
+
+              <!-- Direct email link (original address: roxassablayanbillyjoe@gmail.com) -->
+              <a
+                href="mailto:roxassablayanbillyjoe@gmail.com"
+                class="btn-secondary"
+                aria-label="Send email to roxassablayanbillyjoe@gmail.com"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Email Me
+              </a>
+            </div>
+
+            <!-- TODO: add my GitHub / social profile links here -->
+            <!--
+            <div class="contact-links" style="margin-top:12px;">
+              <a href="YOUR_GITHUB_URL"   class="btn-secondary" target="_blank" rel="noopener" aria-label="GitHub profile">GitHub</a>
+              <a href="YOUR_LINKEDIN_URL" class="btn-secondary" target="_blank" rel="noopener" aria-label="LinkedIn profile">LinkedIn</a>
+            </div>
+            -->
+          </div>
+
+        </div>
+      </section>
+
+    </main><!-- /main -->
+
+    <!-- ══════════════════════════════════════════════════════
+         FOOTER — pill card, reveals on scroll-to-bottom
+         ══════════════════════════════════════════════════════ -->
+    <footer id="site-footer" aria-label="Footer">
+      <div class="footer-card">
+        <span class="footer-heart" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #ef4444;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+        <span class="footer-text">
+          Made with love by
+          <a
+            href="https://github.com/billie355"
+            class="footer-name"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Billy Joe's GitHub profile"
+          >Billy Joe</a>
+          &nbsp;&copy; 2025
+        </span>
+      </div>
+    </footer>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- ── Back to Top Button ────────────────────────────────── -->
+  <button id="back-to-top" aria-label="Scroll back to top" title="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
+
+  <!-- ══════════════════════════════════════════════════════
+       CONTACT MODAL — liquid glass
+       FormSubmit action & all hidden fields UNCHANGED from original.
+       ══════════════════════════════════════════════════════ -->
+  <div
+    id="contactModal"
+    class="modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-heading"
+  >
+    <div class="modal-box">
+      <!-- Close button -->
+      <button class="modal-close" aria-label="Close contact form">&times;</button>
+
+      <!-- Modal heading -->
+      <h2 class="modal-title" id="modal-heading">Send a Message</h2>
+      <p class="modal-subtitle">I'll get back to you as soon as possible.</p>
+
+      <!-- FORM: using Web3Forms for reliable email delivery -->
+      <form action="https://api.web3forms.com/submit" method="POST">
+        <!-- WE WILL PUT YOUR ACCESS KEY HERE -->
+        <input type="hidden" name="access_key" value="42fee7a1-53b3-4b69-9194-4037c21498e7">
+        <!-- Optional: Prevent redirect to Web3Forms page (requires JS or handles it natively on some browsers) -->
+        <input type="hidden" name="redirect" value="https://web3forms.com/success">
+
+        <div class="form-group">
+          <label for="contact-name">Name</label>
+          <input
+            type="text"
+            id="contact-name"
+            name="name"
+            required
+            placeholder="Your Name"
+            autocomplete="name"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="contact-email">Email</label>
+          <input
+            type="email"
+            id="contact-email"
+            name="email"
+            required
+            placeholder="your@email.com"
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="contact-message">Message</label>
+          <textarea
+            id="contact-message"
+            name="message"
+            rows="5"
+            required
+            placeholder="How can I help you?"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+          Send Message
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/script.js" defer></script>
+
+</body>
+</html>
