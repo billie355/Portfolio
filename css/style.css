@@ -175,7 +175,7 @@ a { color: inherit; text-decoration: none; }
 .blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
+  /* Removed filter: blur(60px) for massive scroll performance boost on mobile/tablet */
   opacity: 0.55;
   will-change: transform;
 }
